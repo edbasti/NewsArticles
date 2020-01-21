@@ -12,7 +12,7 @@ class App extends Component {
         fetch("https://newsapi.org/v2/everything?q=bitcoin&from=2019-12-21&sortBy=publishedAt&apiKey=e7ef34b0abd34292be436ff15b021fb9")
           .then(res => res.text())
           .then(res => this.setState({
-                apiResponse: res
+                apiResponse: JSON.parse(res)
             }))
           .catch(err => err);
     }
@@ -22,7 +22,7 @@ class App extends Component {
     }
 
     render() {
-        const data = this.state.apiResponse
+        const datax = this.state.apiResponse
         return (
             <div className="App">
                 <header className="App-header">
@@ -30,12 +30,12 @@ class App extends Component {
                     <h1 className="App-title">News API</h1>
                 </header>
                 <div>
-                    {data.forEach(item => 
+                    {datax && datax.articles.map((item) =>
                         <div>
                           <h1>{item.title}</h1>   
                           <h2>{item.publishedAt}</h2>
                           <img src={item.urlToImage} alt=""/>
-                          <p>item.description</p>
+                          <p>{item.description}</p>
                         </div>
                       )
                     }
